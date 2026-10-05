@@ -79,9 +79,13 @@ public static class ConfigurationHelper
 
         if (!File.Exists(destino))
         {
-            using var origem = FileSystem.OpenAppPackageFileAsync(NomeArquivoBanco).GetAwaiter().GetResult();
-            using var arquivo = File.Create(destino);
-            origem.CopyTo(arquivo);
+            // Task.Run evita bloquear a thread principal durante a inicializacao do aplicativo
+            Task.Run(async () =>
+            {
+                using var origem = await FileSystem.OpenAppPackageFileAsync(NomeArquivoBanco);
+                using var arquivo = File.Create(destino);
+                await origem.CopyToAsync(arquivo);
+            }).GetAwaiter().GetResult();
         }
 
         return destino;
