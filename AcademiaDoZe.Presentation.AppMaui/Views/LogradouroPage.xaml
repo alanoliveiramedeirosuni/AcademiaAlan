@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.LogradouroPage"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             x:DataType="vm:LogradouroViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="14" Padding="16,10,16,24">
+
+            <!-- CEP -->
+            <Border Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="CEP" Style="{StaticResource FieldLabel}"/>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <Entry Grid.Column="0" Text="{Binding Logradouro.Cep}" Placeholder="00000-000" Keyboard="Numeric"/>
+                        <Button Grid.Column="1" Text="Buscar CEP" Command="{Binding SearchByCepCommand}"
+                                Style="{StaticResource ButtonAccent}" HeightRequest="44" Padding="14,0" FontSize="14"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Dados -->
+            <Border Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="14">
+
+                    <Label Text="{Binding Logradouro.Id, StringFormat='Logradouro ID: {0}'}" Style="{StaticResource SubHeadline}"/>
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Nome / Rua" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding Logradouro.Nome}" Placeholder="Digite o nome da rua..."/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Bairro" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding Logradouro.Bairro}" Placeholder="Digite o bairro..."/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Cidade" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding Logradouro.Cidade}" Placeholder="Digite a cidade..."/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Estado (UF)" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding Logradouro.Estado}" Placeholder="SC" MaxLength="2"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="País" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding Logradouro.Pais}" Placeholder="Digite o país..."/>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Ações -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="0" Text="Cancelar" Command="{Binding CancelCommand}" Style="{StaticResource ButtonSecondary}"/>
+                <Button Grid.Column="1" Text="Salvar" Command="{Binding SaveLogradouroCommand}" Style="{StaticResource ButtonPrimary}"/>
+            </Grid>
+
+            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.DashboardListPage"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             x:DataType="vm:DashboardListViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,*" Padding="16,8,16,24">
+
+            <!-- Cabeçalho -->
+            <Border Grid.Row="0" Style="{StaticResource CardBorder}" Margin="0,0,0,18">
+                <VerticalStackLayout Spacing="6">
+                    <Image Source="academiadoze.png" HorizontalOptions="Center" HeightRequest="190" WidthRequest="190"/>
+                    <Label Text="Sistema de Gerenciamento" Style="{StaticResource StatCaption}"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Grid.Row="1" Text="Resumo do sistema" Style="{StaticResource FieldLabel}" Margin="4,0,0,10"/>
+
+            <!-- Cards -->
+            <Grid Grid.Row="2" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" RowSpacing="14" ColumnSpacing="14">
+
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatCardBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToLogradourosCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding TotalLogradouros}" Style="{StaticResource StatNumber}"/>
+                        <Label Text="Logradouros" Style="{StaticResource StatCaption}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatCardBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToAlunosCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding TotalAlunos}" Style="{StaticResource StatNumber}"/>
+                        <Label Text="Alunos" Style="{StaticResource StatCaption}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatCardBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToColaboradoresCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding TotalColaboradores}" Style="{StaticResource StatNumber}"/>
+                        <Label Text="Colaboradores" Style="{StaticResource StatCaption}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatCardBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToMatriculasCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding TotalMatriculas}" Style="{StaticResource StatNumber}"/>
+                        <Label Text="Matrículas" Style="{StaticResource StatCaption}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
+                               VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>
