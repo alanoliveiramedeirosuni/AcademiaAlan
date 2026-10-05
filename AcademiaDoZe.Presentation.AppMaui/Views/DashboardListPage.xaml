@@ -12,7 +12,11 @@
             <!-- Cabeçalho -->
             <Border Grid.Row="0" Style="{StaticResource CardBorder}" Margin="0,0,0,18">
                 <VerticalStackLayout Spacing="6">
-                    <Image Source="academiadoze.png" HorizontalOptions="Center" HeightRequest="190" WidthRequest="190"/>
+                    <Image HorizontalOptions="Center" HeightRequest="190" WidthRequest="190">
+                        <Image.Source>
+                            <AppThemeBinding Light="academiadoze_claro.png" Dark="academiadoze_escuro.png"/>
+                        </Image.Source>
+                    </Image>
                     <Label Text="Sistema de Gerenciamento" Style="{StaticResource StatCaption}"/>
                 </VerticalStackLayout>
             </Border>
@@ -27,6 +31,8 @@
                         <TapGestureRecognizer Command="{Binding NavigateToLogradourosCommand}"/>
                     </Border.GestureRecognizers>
                     <VerticalStackLayout Spacing="4">
+                        <Label FontFamily="MaterialIcons" Text="&#xe7f1;" FontSize="26" HorizontalTextAlignment="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
                         <Label Text="{Binding TotalLogradouros}" Style="{StaticResource StatNumber}"/>
                         <Label Text="Logradouros" Style="{StaticResource StatCaption}"/>
                     </VerticalStackLayout>
@@ -37,6 +43,8 @@
                         <TapGestureRecognizer Command="{Binding NavigateToAlunosCommand}"/>
                     </Border.GestureRecognizers>
                     <VerticalStackLayout Spacing="4">
+                        <Label FontFamily="MaterialIcons" Text="&#xe7fd;" FontSize="26" HorizontalTextAlignment="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
                         <Label Text="{Binding TotalAlunos}" Style="{StaticResource StatNumber}"/>
                         <Label Text="Alunos" Style="{StaticResource StatCaption}"/>
                     </VerticalStackLayout>
@@ -47,6 +55,8 @@
                         <TapGestureRecognizer Command="{Binding NavigateToColaboradoresCommand}"/>
                     </Border.GestureRecognizers>
                     <VerticalStackLayout Spacing="4">
+                        <Label FontFamily="MaterialIcons" Text="&#xea67;" FontSize="26" HorizontalTextAlignment="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
                         <Label Text="{Binding TotalColaboradores}" Style="{StaticResource StatNumber}"/>
                         <Label Text="Colaboradores" Style="{StaticResource StatCaption}"/>
                     </VerticalStackLayout>
@@ -57,6 +67,8 @@
                         <TapGestureRecognizer Command="{Binding NavigateToMatriculasCommand}"/>
                     </Border.GestureRecognizers>
                     <VerticalStackLayout Spacing="4">
+                        <Label FontFamily="MaterialIcons" Text="&#xefec;" FontSize="26" HorizontalTextAlignment="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
                         <Label Text="{Binding TotalMatriculas}" Style="{StaticResource StatNumber}"/>
                         <Label Text="Matrículas" Style="{StaticResource StatCaption}"/>
                     </VerticalStackLayout>

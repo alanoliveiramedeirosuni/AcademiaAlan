@@ -8,20 +8,40 @@
     FlyoutBehavior="Flyout">
 
     <Shell.FlyoutHeader>
-        <Grid BackgroundColor="{StaticResource Primary}" HeightRequest="120">
-            <VerticalStackLayout VerticalOptions="Center" Spacing="2" Padding="18,0">
-                <Label Text="Academia do Zé" TextColor="White" FontSize="20" FontAttributes="Bold"/>
-                <Label Text="Alan Medeiros" TextColor="{StaticResource AccentAmber}" FontSize="14"/>
-            </VerticalStackLayout>
+        <Grid BackgroundColor="{StaticResource Primary}" HeightRequest="130">
+            <HorizontalStackLayout VerticalOptions="Center" Spacing="14" Padding="18,0">
+                <Label FontFamily="MaterialIcons" Text="&#xeb43;" FontSize="40" TextColor="{StaticResource AccentAmber}"
+                       VerticalOptions="Center"/>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                    <Label Text="Academia do Zé" TextColor="White" FontSize="20" FontAttributes="Bold"/>
+                    <Label Text="Alan Medeiros" TextColor="{StaticResource AccentAmber}" FontSize="14"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>
 
     <FlyoutItem Title="Dashboard">
+        <FlyoutItem.Icon>
+            <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe871;"
+                             Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate views:DashboardListPage}" Route="dashboard" />
     </FlyoutItem>
 
     <FlyoutItem Title="Logradouros">
+        <FlyoutItem.Icon>
+            <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe7f1;"
+                             Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate views:LogradouroListPage}" Route="logradouros" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Configurações">
+        <FlyoutItem.Icon>
+            <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe8b8;"
+                             Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate views:ConfigPage}" Route="configuracoes" />
     </FlyoutItem>
 
 </Shell>

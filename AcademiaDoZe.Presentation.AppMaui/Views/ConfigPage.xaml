@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.ConfigPage"
+             Title="Configurações">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="4" Padding="0,8,0,24">
+
+            <!-- Tema -->
+            <Border Style="{StaticResource CardBorder}" Margin="16,10">
+                <VerticalStackLayout Spacing="14">
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label FontFamily="MaterialIcons" Text="&#xe3a9;" FontSize="22"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Aparência" Style="{StaticResource SubHeadline}" HorizontalTextAlignment="Start"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Tema do aplicativo" Style="{StaticResource FieldLabel}"/>
+                        <Picker x:Name="TemaPicker" HeightRequest="46">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>light</x:String>
+                                    <x:String>dark</x:String>
+                                    <x:String>system</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Grid.Column="0" Text="Cancelar" Clicked="OnCancelarClicked"
+                                Style="{StaticResource ButtonSecondary}" HeightRequest="46">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe5c9;"
+                                                 Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+                            </Button.ImageSource>
+                        </Button>
+                        <Button Grid.Column="1" Text="Salvar Tema" Clicked="OnSalvarTemaClicked"
+                                Style="{StaticResource ButtonPrimary}" HeightRequest="46">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe161;" Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"/>
+                            </Button.ImageSource>
+                        </Button>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Credenciais do Banco -->
+            <Border Style="{StaticResource CardBorder}" Margin="16,10">
+                <VerticalStackLayout Spacing="14">
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label FontFamily="MaterialIcons" Text="&#xe1db;" FontSize="22"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                               VerticalOptions="Center"/>
+                        <Label Text="Banco de Dados" Style="{StaticResource SubHeadline}" HorizontalTextAlignment="Start"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Tipo de Gerenciador" Style="{StaticResource FieldLabel}"/>
+                        <Picker x:Name="DatabaseTypePicker" HeightRequest="46" SelectedIndexChanged="OnDatabaseTypeChanged"/>
+                    </VerticalStackLayout>
+
+                    <!-- Mensagem informativa para SQLite -->
+                    <Border x:Name="SqliteInfoCard" IsVisible="False" Padding="12"
+                            BackgroundColor="{AppThemeBinding Light=#E7F2F0, Dark=#15302E}"
+                            Stroke="{AppThemeBinding Light=#BFDEDA, Dark=#1F4642}"
+                            StrokeShape="RoundRectangle 8">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Grid.Column="0" FontFamily="MaterialIcons" Text="&#xe88e;" FontSize="18"
+                                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                   VerticalOptions="Start"/>
+                            <Label Grid.Column="1" Text="O SQLite é um banco de dados local armazenado em arquivo. Não requer servidor de rede, usuário ou senha."
+                                   FontSize="13" LineBreakMode="WordWrap"
+                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource Gray200}}"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Campo específico para SQLite (Caminho do arquivo .db) -->
+                    <VerticalStackLayout x:Name="SqliteContainer" Spacing="5" IsVisible="False">
+                        <Label Text="Caminho / Arquivo do Banco (.db)" Style="{StaticResource FieldLabel}"/>
+                        <Entry x:Name="SqliteCaminhoEntry" Placeholder="Ex: db_academia_do_ze.db"/>
+                    </VerticalStackLayout>
+
+                    <!-- Configurações de Servidor e Banco (SQL Server e MySQL) -->
+                    <Grid x:Name="ServidorBancoGrid" ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Spacing="5" Grid.Column="0">
+                            <Label Text="Servidor" Style="{StaticResource FieldLabel}"/>
+                            <Entry x:Name="ServidorEntry" Placeholder="Digite o servidor..."/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Spacing="5" Grid.Column="1">
+                            <Label Text="Banco" Style="{StaticResource FieldLabel}"/>
+                            <Entry x:Name="BancoEntry" Placeholder="Digite o nome do banco..."/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Credenciais de Acesso (SQL Server e MySQL) -->
+                    <Grid x:Name="CredenciaisGrid" ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Spacing="5" Grid.Column="0">
+                            <Label Text="Usuário" Style="{StaticResource FieldLabel}"/>
+                            <Entry x:Name="UsuarioEntry" Placeholder="Digite o usuário..."/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Spacing="5" Grid.Column="1">
+                            <Label Text="Senha" Style="{StaticResource FieldLabel}"/>
+                            <Entry x:Name="SenhaEntry" Placeholder="Digite a senha..." IsPassword="True"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Complemento / Parâmetros adicionais da connection string -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label x:Name="ComplementoLabel" Text="Complemento" Style="{StaticResource FieldLabel}"/>
+                        <Entry x:Name="ComplementoEntry" Placeholder="Digite o complemento..."/>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Grid.Column="0" Text="Cancelar" Clicked="OnCancelarClicked"
+                                Style="{StaticResource ButtonSecondary}" HeightRequest="46">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe5c9;"
+                                                 Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+                            </Button.ImageSource>
+                        </Button>
+                        <Button Grid.Column="1" Text="Salvar BD" Clicked="OnSalvarBdClicked"
+                                Style="{StaticResource ButtonPrimary}" HeightRequest="46">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe161;" Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"/>
+                            </Button.ImageSource>
+                        </Button>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -16,7 +16,11 @@
                         WidthRequest="110" HeightRequest="42" VerticalOptions="Center"/>
                 <Entry Grid.Column="2" Text="{Binding SearchText}" Placeholder="Digite o valor..." HeightRequest="42" VerticalOptions="Center"/>
                 <Button Grid.Column="4" Text="Buscar" Style="{StaticResource ButtonPrimary}" FontSize="14"
-                        WidthRequest="84" HeightRequest="42" Command="{Binding SearchLogradourosCommand}"/>
+                        WidthRequest="100" HeightRequest="42" Command="{Binding SearchLogradourosCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe8b6;" Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}" Size="16"/>
+                    </Button.ImageSource>
+                </Button>
             </Grid>
         </Border>
 
@@ -28,7 +32,11 @@
                     <CollectionView.EmptyView>
                         <VerticalStackLayout VerticalOptions="Center" Padding="30" Spacing="14">
                             <Label Text="Nenhum logradouro encontrado" HorizontalOptions="Center" Style="{StaticResource SubHeadline}"/>
-                            <Button Text="Cadastrar o primeiro" Command="{Binding AddLogradouroCommand}" Style="{StaticResource ButtonAccent}"/>
+                            <Button Text="Cadastrar o primeiro" Command="{Binding AddLogradouroCommand}" Style="{StaticResource ButtonAccent}">
+                                <Button.ImageSource>
+                                    <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe145;" Color="{StaticResource PrimaryDarkText}" Size="16"/>
+                                </Button.ImageSource>
+                            </Button>
                         </VerticalStackLayout>
                     </CollectionView.EmptyView>
 
@@ -53,9 +61,17 @@
                                     </Label>
 
                                     <Button Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Text="Editar"
-                                            Style="{StaticResource ButtonSmall}" Clicked="OnEditButtonClicked"/>
+                                            Style="{StaticResource ButtonSmall}" Clicked="OnEditButtonClicked">
+                                        <Button.ImageSource>
+                                            <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe3c9;" Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}" Size="14"/>
+                                        </Button.ImageSource>
+                                    </Button>
                                     <Button Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="Excluir"
-                                            Style="{StaticResource ButtonDanger}" Clicked="OnDeleteButtonClicked"/>
+                                            Style="{StaticResource ButtonDanger}" Clicked="OnDeleteButtonClicked">
+                                        <Button.ImageSource>
+                                            <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe872;" Color="White" Size="14"/>
+                                        </Button.ImageSource>
+                                    </Button>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -64,7 +80,7 @@
                 </CollectionView>
             </RefreshView>
 
-            <Button Text="+" Command="{Binding AddLogradouroCommand}" Style="{StaticResource ButtonAccent}"
+            <Button FontFamily="MaterialIcons" Text="&#xe145;" Command="{Binding AddLogradouroCommand}" Style="{StaticResource ButtonAccent}"
                     FontSize="26" WidthRequest="58" HeightRequest="58" CornerRadius="29"
                     HorizontalOptions="End" VerticalOptions="End" Margin="22">
                 <Button.Shadow>
