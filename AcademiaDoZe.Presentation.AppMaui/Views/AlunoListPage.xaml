@@ -71,13 +71,13 @@
                     </VerticalStackLayout>
 
                     <HorizontalStackLayout Grid.Row="1" Grid.Column="2" Spacing="8" HorizontalOptions="End" Margin="0,8,0,0">
-                        <Button Text="Editar" Style="{StaticResource ButtonSmall}" Clicked="OnEditButtonClicked">
+                        <Button Text="Editar" Style="{StaticResource ButtonSmall}" WidthRequest="96" Clicked="OnEditButtonClicked">
                             <Button.ImageSource>
                                 <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe3c9;" Size="14"
                                                  Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"/>
                             </Button.ImageSource>
                         </Button>
-                        <Button Text="Excluir" Style="{StaticResource ButtonDanger}" Clicked="OnDeleteButtonClicked">
+                        <Button Text="Excluir" Style="{StaticResource ButtonDanger}" WidthRequest="96" Clicked="OnDeleteButtonClicked">
                             <Button.ImageSource>
                                 <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe872;" Size="14" Color="White"/>
                             </Button.ImageSource>

@@ -5,4 +5,14 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-feature android:name="android.hardware.camera" android:required="false" />
+	<!-- Android 11+ exige declarar as intents consultadas para o seletor encontrar os aplicativos de camera e galeria -->
+	<queries>
+		<intent>
+			<action android:name="android.media.action.IMAGE_CAPTURE" />
+		</intent>
+		<intent>
+			<action android:name="android.intent.action.GET_CONTENT" />
+			<data android:mimeType="image/*" />
+		</intent>
+	</queries>
 </manifest>
