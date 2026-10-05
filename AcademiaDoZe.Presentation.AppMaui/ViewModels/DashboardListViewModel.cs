@@ -77,10 +77,10 @@ public partial class DashboardListViewModel : BaseViewModel
     private static async Task NavigateToLogradourosAsync() => await Shell.Current.GoToAsync("//logradouros");
 
     [RelayCommand]
-    private static async Task NavigateToAlunosAsync() => await AvisarEmBreveAsync("Alunos");
+    private static async Task NavigateToAlunosAsync() => await Shell.Current.GoToAsync("//alunos");
 
     [RelayCommand]
-    private static async Task NavigateToColaboradoresAsync() => await AvisarEmBreveAsync("Colaboradores");
+    private static async Task NavigateToColaboradoresAsync() => await Shell.Current.GoToAsync("//colaboradores");
 
     [RelayCommand]
     private static async Task NavigateToMatriculasAsync() => await AvisarEmBreveAsync("Matrículas");

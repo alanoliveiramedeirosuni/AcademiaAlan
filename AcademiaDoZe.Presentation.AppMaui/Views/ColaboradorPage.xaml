@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.ColaboradorPage"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             x:DataType="vm:ColaboradorViewModel"
+             xmlns:converters="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Converters"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <converters:FotoToImageSourceConverter x:Key="FotoToImageSourceConverter" />
+        <converters:DateOnlyToDateTimeConverter x:Key="DateOnlyConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="4" Padding="0,8,0,24">
+
+            <!-- Foto -->
+            <Border Style="{StaticResource CardBorder}" Margin="16,10">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Foto do colaborador" Style="{StaticResource FieldLabel}" HorizontalTextAlignment="Center"/>
+
+                    <Border Padding="0" StrokeThickness="2" HorizontalOptions="Center"
+                            Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                            StrokeShape="RoundRectangle 16">
+                        <Grid>
+                            <Label FontFamily="MaterialIcons" Text="&#xe7fd;" FontSize="64" HorizontalOptions="Center" VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"/>
+                            <Image Aspect="AspectFill" Source="{Binding Colaborador.Foto, Converter={StaticResource FotoToImageSourceConverter}}">
+                                <Image.HeightRequest>
+                                    <OnIdiom x:TypeArguments="x:Double">
+                                        <OnIdiom.Phone>170</OnIdiom.Phone>
+                                        <OnIdiom.Tablet>200</OnIdiom.Tablet>
+                                        <OnIdiom.Desktop>200</OnIdiom.Desktop>
+                                        <OnIdiom.TV>220</OnIdiom.TV>
+                                        <OnIdiom.Default>170</OnIdiom.Default>
+                                    </OnIdiom>
+                                </Image.HeightRequest>
+                                <Image.WidthRequest>
+                                    <OnIdiom x:TypeArguments="x:Double">
+                                        <OnIdiom.Phone>170</OnIdiom.Phone>
+                                        <OnIdiom.Tablet>200</OnIdiom.Tablet>
+                                        <OnIdiom.Desktop>200</OnIdiom.Desktop>
+                                        <OnIdiom.TV>220</OnIdiom.TV>
+                                        <OnIdiom.Default>170</OnIdiom.Default>
+                                    </OnIdiom>
+                                </Image.WidthRequest>
+                            </Image>
+                        </Grid>
+                    </Border>
+
+                    <Button Text="Escolher foto" Command="{Binding SelecionarFotoCommand}" Style="{StaticResource ButtonAccent}" HeightRequest="46">
+                        <Button.ImageSource>
+                            <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe3b0;" Size="18" Color="{StaticResource PrimaryDarkText}"/>
+                        </Button.ImageSource>
+                    </Button>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Dados pessoais -->
+            <Border Style="{StaticResource CardBorder}" Margin="16,10">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="{Binding Colaborador.Id, StringFormat='Colaborador ID: {0}'}" Style="{StaticResource SubHeadline}"/>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Nome" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding Colaborador.Nome}" Placeholder="Digite o nome completo..."/>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label Text="CPF" Style="{StaticResource FieldLabel}"/>
+                            <Entry Text="{Binding Colaborador.Cpf}" Placeholder="Somente números" Keyboard="Numeric" MaxLength="11"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="5">
+                            <Label Text="Telefone" Style="{StaticResource FieldLabel}"/>
+                            <Entry Text="{Binding Colaborador.Telefone}" Placeholder="DDD + número" Keyboard="Telephone" MaxLength="11"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="E-mail" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding Colaborador.Email}" Placeholder="Digite o e-mail..." Keyboard="Email"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Data de nascimento" Style="{StaticResource FieldLabel}"/>
+                        <DatePicker Date="{Binding Colaborador.DataNascimento, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}" Format="dd/MM/yyyy"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Dados funcionais -->
+            <Border Style="{StaticResource CardBorder}" Margin="16,10">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Dados funcionais" Style="{StaticResource SubHeadline}" HorizontalTextAlignment="Start"/>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Data de admissão" Style="{StaticResource FieldLabel}"/>
+                        <DatePicker Date="{Binding Colaborador.DataAdmissao, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}" Format="dd/MM/yyyy"/>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label Text="Cargo" Style="{StaticResource FieldLabel}"/>
+                            <Picker ItemsSource="{Binding ColaboradorTipos}" SelectedItem="{Binding Colaborador.Tipo}" HeightRequest="46"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="5">
+                            <Label Text="Vínculo" Style="{StaticResource FieldLabel}"/>
+                            <Picker ItemsSource="{Binding ColaboradorVinculos}" SelectedItem="{Binding Colaborador.Vinculo}" HeightRequest="46"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Endereço -->
+            <Border Style="{StaticResource CardBorder}" Margin="16,10">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Endereço" Style="{StaticResource SubHeadline}" HorizontalTextAlignment="Start"/>
+
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label Text="CEP" Style="{StaticResource FieldLabel}"/>
+                            <Entry Text="{Binding Colaborador.Endereco.Cep}" Placeholder="00000-000" Keyboard="Numeric"/>
+                        </VerticalStackLayout>
+                        <Button Grid.Column="1" Text="Buscar" Command="{Binding SearchByCepCommand}" Style="{StaticResource ButtonAccent}"
+                                HeightRequest="44" Padding="14,0" FontSize="14" VerticalOptions="End">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe8b6;" Size="16" Color="{StaticResource PrimaryDarkText}"/>
+                            </Button.ImageSource>
+                        </Button>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="2" IsVisible="{Binding HasEnderecoVinculado}">
+                        <Label Text="{Binding Colaborador.Endereco.Nome}" FontAttributes="Bold"/>
+                        <Label Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Colaborador.Endereco.Bairro}"/>
+                                    <Span Text=" · "/>
+                                    <Span Text="{Binding Colaborador.Endereco.Cidade}"/>
+                                    <Span Text=" - "/>
+                                    <Span Text="{Binding Colaborador.Endereco.Estado}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+
+                    <Label Text="Informe o CEP e toque em Buscar para vincular o logradouro." Style="{StaticResource StatCaption}"
+                           HorizontalTextAlignment="Start" IsVisible="{Binding HasNoEnderecoVinculado}"/>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label Text="Número" Style="{StaticResource FieldLabel}"/>
+                            <Entry Text="{Binding Colaborador.Numero}" Placeholder="Nº"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="5">
+                            <Label Text="Complemento" Style="{StaticResource FieldLabel}"/>
+                            <Entry Text="{Binding Colaborador.Complemento}" Placeholder="Opcional"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Acesso -->
+            <Border Style="{StaticResource CardBorder}" Margin="16,10">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Acesso ao sistema" Style="{StaticResource SubHeadline}" HorizontalTextAlignment="Start"/>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Senha" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding Colaborador.Senha}" Placeholder="Mínimo 6 caracteres com 1 maiúscula" IsPassword="True"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Confirmar senha" Style="{StaticResource FieldLabel}"/>
+                        <Entry Text="{Binding ConfirmarSenha}" Placeholder="Repita a senha" IsPassword="True"/>
+                    </VerticalStackLayout>
+
+                    <Label Text="Na edição, preencha a senha apenas se desejar alterá-la." Style="{StaticResource StatCaption}"
+                           HorizontalTextAlignment="Start" IsVisible="{Binding IsEditMode}"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Ações -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="16,10">
+                <Button Grid.Column="0" Text="Cancelar" Command="{Binding CancelCommand}" Style="{StaticResource ButtonSecondary}">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe5c9;" Size="16"
+                                         Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+                    </Button.ImageSource>
+                </Button>
+                <Button Grid.Column="1" Text="Salvar" Command="{Binding SaveColaboradorCommand}" Style="{StaticResource ButtonPrimary}">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe161;" Size="16"
+                                         Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"/>
+                    </Button.ImageSource>
+                </Button>
+            </Grid>
+
+            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

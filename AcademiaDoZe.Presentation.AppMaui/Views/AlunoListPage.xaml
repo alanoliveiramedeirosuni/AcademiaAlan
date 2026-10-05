@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.AlunoListPage"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             x:DataType="vm:AlunoListViewModel"
+             xmlns:dto="clr-namespace:AcademiaDoZe.Application.DTOs;assembly=AcademiaDoZe.Application"
+             xmlns:converters="clr-namespace:AcademiaDoZe.Presentation.AppMaui.Converters"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <converters:FotoToImageSourceConverter x:Key="FotoToImageSourceConverter" />
+
+        <!-- template único para Phone, Tablet, Desktop, TV, Watch e Default -->
+        <DataTemplate x:Key="AlunoItemTemplate" x:DataType="dto:AlunoDto">
+            <Border Style="{StaticResource CardBorder}" Margin="16,6">
+                <Grid ColumnDefinitions="Auto,14,*" RowDefinitions="Auto,Auto">
+
+                    <!-- foto com tamanho conforme o tipo de dispositivo -->
+                    <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Padding="0" StrokeThickness="2"
+                            Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                            StrokeShape="RoundRectangle 12" VerticalOptions="Start">
+                        <Grid>
+                            <Label FontFamily="MaterialIcons" Text="&#xe7fd;" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"/>
+                            <Image Aspect="AspectFill" Source="{Binding Foto, Converter={StaticResource FotoToImageSourceConverter}}">
+                                <Image.HeightRequest>
+                                    <OnIdiom x:TypeArguments="x:Double">
+                                        <OnIdiom.Phone>96</OnIdiom.Phone>
+                                        <OnIdiom.Tablet>120</OnIdiom.Tablet>
+                                        <OnIdiom.Desktop>120</OnIdiom.Desktop>
+                                        <OnIdiom.TV>140</OnIdiom.TV>
+                                        <OnIdiom.Default>96</OnIdiom.Default>
+                                    </OnIdiom>
+                                </Image.HeightRequest>
+                                <Image.WidthRequest>
+                                    <OnIdiom x:TypeArguments="x:Double">
+                                        <OnIdiom.Phone>96</OnIdiom.Phone>
+                                        <OnIdiom.Tablet>120</OnIdiom.Tablet>
+                                        <OnIdiom.Desktop>120</OnIdiom.Desktop>
+                                        <OnIdiom.TV>140</OnIdiom.TV>
+                                        <OnIdiom.Default>96</OnIdiom.Default>
+                                    </OnIdiom>
+                                </Image.WidthRequest>
+                            </Image>
+                        </Grid>
+                    </Border>
+
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="2" Spacing="3">
+                        <Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="16" LineBreakMode="TailTruncation"/>
+                        <Label Text="{Binding Cpf, StringFormat='CPF: {0}'}" Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start"/>
+                        <Label Text="{Binding Telefone, StringFormat='Telefone: {0}'}" Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start"/>
+                        <Label Text="{Binding Email, StringFormat='E-mail: {0}'}" Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation"/>
+                        <Label Text="{Binding DataNascimento, StringFormat='Nascimento: {0:dd/MM/yyyy}'}" Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start"/>
+
+                        <Label Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Endereco.Nome}"/>
+                                    <Span Text=", "/>
+                                    <Span Text="{Binding Numero}"/>
+                                    <Span Text=" - "/>
+                                    <Span Text="{Binding Endereco.Bairro}"/>
+                                    <Span Text=", "/>
+                                    <Span Text="{Binding Endereco.Cidade}"/>
+                                    <Span Text=" - "/>
+                                    <Span Text="{Binding Endereco.Estado}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout Grid.Row="1" Grid.Column="2" Spacing="8" HorizontalOptions="End" Margin="0,8,0,0">
+                        <Button Text="Editar" Style="{StaticResource ButtonSmall}" Clicked="OnEditButtonClicked">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe3c9;" Size="14"
+                                                 Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"/>
+                            </Button.ImageSource>
+                        </Button>
+                        <Button Text="Excluir" Style="{StaticResource ButtonDanger}" Clicked="OnDeleteButtonClicked">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe872;" Size="14" Color="White"/>
+                            </Button.ImageSource>
+                        </Button>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Busca -->
+        <Border Grid.Row="0" Style="{StaticResource CardBorder}" Margin="16,10">
+            <Grid ColumnDefinitions="Auto,8,*,8,Auto" VerticalOptions="Center">
+                <Picker Grid.Column="0" Title="" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}"
+                        WidthRequest="110" HeightRequest="42" VerticalOptions="Center"/>
+                <Entry Grid.Column="2" Text="{Binding SearchText}" Placeholder="Digite o valor..." HeightRequest="42" VerticalOptions="Center"
+                       ClearButtonVisibility="WhileEditing" ReturnCommand="{Binding SearchAlunosCommand}"/>
+                <Button Grid.Column="4" Text="Buscar" Style="{StaticResource ButtonPrimary}" FontSize="14"
+                        WidthRequest="100" HeightRequest="42" Command="{Binding SearchAlunosCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe8b6;" Size="16"
+                                         Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"/>
+                    </Button.ImageSource>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Lista -->
+        <Grid Grid.Row="1">
+            <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+                <CollectionView ItemsSource="{Binding Alunos}" SelectionMode="None"
+                                ItemTemplate="{StaticResource AlunoItemTemplate}">
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout VerticalOptions="Center" Padding="30" Spacing="14">
+                            <Label Text="Nenhum aluno encontrado" HorizontalOptions="Center" Style="{StaticResource SubHeadline}"/>
+                            <Button Text="Cadastrar o primeiro" Command="{Binding AddAlunoCommand}" Style="{StaticResource ButtonAccent}">
+                                <Button.ImageSource>
+                                    <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe145;" Size="16" Color="{StaticResource PrimaryDarkText}"/>
+                                </Button.ImageSource>
+                            </Button>
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </RefreshView>
+
+            <Button FontFamily="MaterialIcons" Text="&#xe145;" Command="{Binding AddAlunoCommand}" Style="{StaticResource ButtonAccent}"
+                    FontSize="26" WidthRequest="58" HeightRequest="58" CornerRadius="29"
+                    HorizontalOptions="End" VerticalOptions="End" Margin="22">
+                <Button.Shadow>
+                    <Shadow Brush="{AppThemeBinding Light=Black, Dark=Gray}" Offset="0,4" Radius="8" Opacity="0.3"/>
+                </Button.Shadow>
+            </Button>
+        </Grid>
+
+        <ActivityIndicator Grid.Row="0" Grid.RowSpan="2" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
+                           VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+
+</ContentPage>
