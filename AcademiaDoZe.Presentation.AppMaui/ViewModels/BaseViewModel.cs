@@ -26,5 +26,6 @@ public partial class BaseViewModel : ObservableObject
         set => SetProperty(ref isRefreshing, value);
     }
 
-    protected static TimeSpan Timeout => TimeSpan.FromSeconds(5);
+    // o hash da senha e a gravação da foto deixam a escrita lenta em dispositivos modestos
+    protected static TimeSpan Timeout => TimeSpan.FromSeconds(30);
 }
