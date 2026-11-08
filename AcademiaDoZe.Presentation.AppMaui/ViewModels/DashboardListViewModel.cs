@@ -83,8 +83,5 @@ public partial class DashboardListViewModel : BaseViewModel
     private static async Task NavigateToColaboradoresAsync() => await Shell.Current.GoToAsync("//colaboradores");
 
     [RelayCommand]
-    private static async Task NavigateToMatriculasAsync() => await AvisarEmBreveAsync("Matrículas");
-
-    private static async Task AvisarEmBreveAsync(string funcionalidade) =>
-        await Shell.Current.DisplayAlertAsync(funcionalidade, $"A tela de {funcionalidade} será implementada na próxima etapa.", "OK");
+    private static async Task NavigateToMatriculasAsync() => await Shell.Current.GoToAsync("//matriculas");
 }
