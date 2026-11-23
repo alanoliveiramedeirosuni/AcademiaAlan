@@ -66,6 +66,17 @@ public static class DbInitializer
 
         if (!File.Exists(caminho))
         {
+            var assembly = typeof(DbInitializer).Assembly;
+            using var recurso = assembly.GetManifestResourceStream($"AcademiaDoZe.Infrastructure.Scripts.{nomeArquivo}");
+            if (recurso is not null)
+            {
+                using var leitor = new StreamReader(recurso);
+                return leitor.ReadToEnd();
+            }
+        }
+
+        if (!File.Exists(caminho))
+        {
             throw new InfrastructureException(
                 "SCRIPT_NAO_ENCONTRADO",
                 $"Script de criacao nao encontrado em '{caminho}'.");

@@ -16,6 +16,9 @@
 		<RootNamespace>AcademiaDoZe.Presentation.AppMaui</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
+        <Authors>Alan Medeiros</Authors>
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+        <JavaSdkDirectory Condition="'$(JavaSdkDirectory)' == '' And Exists('$(HOME)/Desktop/UNIPLAC/jdk/jdk-17.0.16+8/Contents/Home/bin/javac')">$(HOME)/Desktop/UNIPLAC/jdk/jdk-17.0.16+8/Contents/Home</JavaSdkDirectory>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 

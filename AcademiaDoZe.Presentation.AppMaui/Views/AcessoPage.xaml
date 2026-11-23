@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+             xmlns:dto="clr-namespace:AcademiaDoZe.Application.DTOs;assembly=AcademiaDoZe.Application"
+             x:Class="AcademiaDoZe.Presentation.AppMaui.Views.AcessoPage"
+             x:DataType="vm:AcessoViewModel" Title="Entrada e saída">
+    <Grid Padding="16" RowDefinitions="Auto,Auto,*" RowSpacing="14">
+        <Border Style="{StaticResource CardBorder}">
+            <Border.Triggers>
+                <DataTrigger TargetType="Border" Binding="{Binding IsBusy}" Value="True">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Border.Triggers>
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Controle de acesso" Style="{StaticResource SubHeadline}"/>
+                <Label Text="Alan Medeiros · Academia do Zé" Style="{StaticResource StatCaption}" HorizontalTextAlignment="Start"/>
+                <Label Text="Categoria"/>
+                <Picker Title="Aluno ou colaborador" ItemsSource="{Binding Tipos}" SelectedItem="{Binding TipoSelecionado}" SelectedIndexChanged="OnTipoChanged" AutomationId="categoria-acesso"/>
+                <SearchBar Placeholder="Buscar por nome ou CPF" Text="{Binding Busca}" AutomationId="busca-pessoa-acesso"/>
+                <Label Text="Pessoa cadastrada"/>
+                <Picker Title="Selecione pelo nome e CPF" ItemsSource="{Binding Pessoas}" SelectedItem="{Binding PessoaSelecionada}" ItemDisplayBinding="{Binding Descricao, x:DataType=vm:PessoaAcesso}" SelectedIndexChanged="OnPessoaChanged" AutomationId="pessoa-acesso"/>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button Text="Registrar entrada" Command="{Binding EntradaCommand}" IsEnabled="{Binding TemPessoa}" Style="{StaticResource ButtonPrimary}" AutomationId="registrar-entrada"/>
+                    <Button Grid.Column="1" Text="Registrar saída" Command="{Binding SaidaCommand}" IsEnabled="{Binding TemPessoa}" Style="{StaticResource ButtonSecondary}" AutomationId="registrar-saida"/>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+        <Border Grid.Row="1" Style="{StaticResource CardBorder}">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="{Binding Mensagem}" LineBreakMode="WordWrap" AutomationId="resultado-acesso">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Aviso}" Value="True">
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light=#9F2222, Dark=#FFB4AB}"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+            </VerticalStackLayout>
+        </Border>
+        <Grid Grid.Row="2" RowDefinitions="Auto,*" RowSpacing="8">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Histórico de visitas" Style="{StaticResource SubHeadline}" VerticalOptions="Center"/>
+                <Button Grid.Column="1" Text="Atualizar" Command="{Binding ConsultarCommand}" Style="{StaticResource ButtonSecondary}"/>
+            </Grid>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Historico}" SelectionMode="None">
+                <CollectionView.EmptyView><Label Text="Nenhuma visita registrada para a pessoa selecionada." Margin="0,12"/></CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dto:AcessoDto">
+                        <Border Style="{StaticResource CardBorder}" Margin="0,0,0,10">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding EntradaTexto}" FontAttributes="Bold"/>
+                                <Label Text="{Binding SaidaTexto}"/>
+                                <Label Text="{Binding PermanenciaTexto}"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>

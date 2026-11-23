@@ -49,7 +49,7 @@ public abstract class TestBase
             "SGBD nao suportado para testes.")
     };
 
-    protected static string CaminhoBancoSqlite => Path.Combine(
+    protected static string CaminhoBancoSqlite => Environment.GetEnvironmentVariable("ACADEMIA_BANCO_TESTES") ?? Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
         "DEV",
         "AcademiaDoZe",

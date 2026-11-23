@@ -57,3 +57,16 @@ CREATE TABLE IF NOT EXISTS tb_matricula (
     CONSTRAINT fk_matricula_aluno FOREIGN KEY (aluno_id)
         REFERENCES tb_aluno (id_aluno)
 );
+
+-- @@SPLIT@@
+CREATE TABLE IF NOT EXISTS tb_registro_acesso (
+    id_acesso INT PRIMARY KEY AUTO_INCREMENT,
+    tipo INT NOT NULL,
+    pessoa_id INT NOT NULL,
+    entrada DATETIME(6) NOT NULL,
+    saida DATETIME(6) NULL,
+    pessoa_aberta INT NULL,
+    CONSTRAINT ux_acesso_aberto UNIQUE (tipo, pessoa_aberta),
+    CONSTRAINT ck_acesso_tipo CHECK (tipo IN (0, 1)),
+    CONSTRAINT ck_acesso_horarios CHECK (saida IS NULL OR saida >= entrada)
+);

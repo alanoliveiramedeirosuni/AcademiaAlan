@@ -61,3 +61,20 @@ CREATE TABLE tb_matricula (
     CONSTRAINT fk_matricula_aluno FOREIGN KEY (aluno_id)
         REFERENCES tb_aluno (id_aluno)
 );
+
+-- @@SPLIT@@
+
+IF OBJECT_ID('tb_registro_acesso', 'U') IS NULL
+BEGIN
+    CREATE TABLE tb_registro_acesso (
+        id_acesso INT IDENTITY(1,1) PRIMARY KEY,
+        tipo INT NOT NULL,
+        pessoa_id INT NOT NULL,
+        entrada DATETIME2 NOT NULL,
+        saida DATETIME2 NULL,
+        pessoa_aberta INT NULL,
+        CONSTRAINT ck_acesso_tipo CHECK (tipo IN (0, 1)),
+        CONSTRAINT ck_acesso_horarios CHECK (saida IS NULL OR saida >= entrada)
+    );
+    CREATE UNIQUE INDEX ux_acesso_aberto ON tb_registro_acesso(tipo, pessoa_aberta) WHERE pessoa_aberta IS NOT NULL;
+END;

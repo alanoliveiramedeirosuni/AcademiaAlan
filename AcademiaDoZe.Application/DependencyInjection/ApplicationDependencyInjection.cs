@@ -46,6 +46,14 @@ public static class ApplicationDependencyInjection
             return (Func<IMatriculaRepository>)(() => new MatriculaRepository(config.ConnectionString, config.DatabaseType));
         });
 
+        services.AddSingleton(TimeProvider.System);
+        services.AddTransient<IRegistroAcessoService, RegistroAcessoService>();
+        services.AddTransient(provider =>
+        {
+            var config = provider.GetRequiredService<RepositoryConfig>();
+            return (Func<IRegistroAcessoRepository>)(() => new RegistroAcessoRepository(config.ConnectionString, config.DatabaseType));
+        });
+
         return services;
     }
 }

@@ -34,6 +34,9 @@ public static class MauiProgram
         builder.Services.AddTransient<MatriculaListViewModel>();
         builder.Services.AddTransient<MatriculaViewModel>();
 
+        builder.Services.AddTransient<AcessoViewModel>();
+        builder.Services.AddTransient<AcessoPage>();
+
         // Registrar Views
         builder.Services.AddTransient<DashboardListPage>();
         builder.Services.AddTransient<LogradouroListPage>();
